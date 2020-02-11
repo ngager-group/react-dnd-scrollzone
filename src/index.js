@@ -104,6 +104,10 @@ export default function createScrollingComponent(WrappedComponent) {
 
     componentDidMount() {
       const { getScrollContainer, forwardRef } = this.props;
+      console.log('forwardRef', forwardRef);
+      if (!forwardRef || !forwardRef.current) {
+        return;
+      }
       const wrappedNode = findDOMNode(forwardRef);
       this.container = getScrollContainer ? getScrollContainer(wrappedNode) : wrappedNode;
       this.container.addEventListener('dragover', this.handleEvent);
@@ -114,6 +118,11 @@ export default function createScrollingComponent(WrappedComponent) {
       this.clearMonitorSubscription = this.getDragDropManager()
           .getMonitor()
           .subscribeToStateChange(() => this.handleMonitorChange());
+    }
+
+    componentDidUpdate(prevProps) {
+      console.log('old props:', prevProps);
+      console.log('new props:', this.props);
     }
 
     componentWillUnmount() {
