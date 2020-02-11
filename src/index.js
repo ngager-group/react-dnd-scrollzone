@@ -14,17 +14,13 @@ const useNewContextApi = createContext !== undefined && DragDropContextConsumer 
 
 function createDragDropMonitorWrapper(WrappedComponent) {
   return function DragDropMonitorWrapper(props) {
-    return React.forwardRef((propsa, ref) => {
-      console.log('test1', propsa);
-      console.log('test2', props);
-      return (
-        <DragDropContextConsumer>
-          {({ dragDropManager }) =>
-            <WrappedComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
-          }
-        </DragDropContextConsumer>
-      );
-    });
+    return (
+      <DragDropContextConsumer>
+        {({ dragDropManager }) =>
+          <WrappedComponent {...props} dragDropManager={dragDropManager} />
+        }
+      </DragDropContextConsumer>
+    );
   };
 }
 
@@ -255,7 +251,7 @@ export default function createScrollingComponent(WrappedComponent) {
 
       return (
         <WrappedComponent
-          ref={(ref) => { this.wrappedInstance = ref; }}
+          ref={this.forwardedRef}
           {...props}
         />
       );
@@ -263,7 +259,17 @@ export default function createScrollingComponent(WrappedComponent) {
   }
 
   if (useNewContextApi) {
-    const DragDropMonitorWrapper = createDragDropMonitorWrapper(ScrollingComponent);
+    // const DragDropMonitorWrapper = createDragDropMonitorWrapper(ScrollingComponent);
+    const DragDropMonitorWrapper = React.forwardRef((props, ref) => {
+      console.log('test', props);
+      return (
+        <DragDropContextConsumer>
+          {({ dragDropManager }) =>
+            <WrappedComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
+          }
+        </DragDropContextConsumer>
+      );
+    });
     return hoist(DragDropMonitorWrapper, WrappedComponent);
   }
 
