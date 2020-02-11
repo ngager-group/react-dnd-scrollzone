@@ -103,8 +103,8 @@ export default function createScrollingComponent(WrappedComponent) {
     }
 
     componentDidMount() {
-      const { getScrollContainer } = this.props;
-      const wrappedNode = findDOMNode(this.wrappedInstance);
+      const { getScrollContainer, forwardRef } = this.props;
+      const wrappedNode = findDOMNode(forwardRef);
       this.container = getScrollContainer ? getScrollContainer(wrappedNode) : wrappedNode;
       this.container.addEventListener('dragover', this.handleEvent);
       // touchmove events don't seem to work across siblings, so we unfortunately
