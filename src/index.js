@@ -13,16 +13,19 @@ const DEFAULT_BUFFER = 150;
 const useNewContextApi = createContext !== undefined && DragDropContextConsumer !== undefined;
 
 function createDragDropMonitorWrapper(WrappedComponent) {
-  return React.forwardRef((props, ref) => {
-    console.log('test');
-    return (
-      <DragDropContextConsumer>
-        {({ dragDropManager }) =>
-          <WrappedComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
-        }
-      </DragDropContextConsumer>
-    );
-  });
+  return function DragDropMonitorWrapper(props) {
+    return React.forwardRef((propsa, ref) => {
+      console.log('test1', propsa);
+      console.log('test2', props);
+      return (
+        <DragDropContextConsumer>
+          {({ dragDropManager }) =>
+            <WrappedComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
+          }
+        </DragDropContextConsumer>
+      );
+    });
+  };
 }
 
 export function createHorizontalStrength(_buffer) {
@@ -104,8 +107,8 @@ export default function createScrollingComponent(WrappedComponent) {
     }
 
     componentDidMount() {
-      const { getScrollContainer, forwardedRef } = this.props;
-      const wrappedNode = findDOMNode(forwardedRef);
+      const { getScrollContainer } = this.props;
+      const wrappedNode = findDOMNode(this.wrappedInstance);
       this.container = getScrollContainer ? getScrollContainer(wrappedNode) : wrappedNode;
       this.container.addEventListener('dragover', this.handleEvent);
       // touchmove events don't seem to work across siblings, so we unfortunately
@@ -252,7 +255,7 @@ export default function createScrollingComponent(WrappedComponent) {
 
       return (
         <WrappedComponent
-          ref={forwardedRef}
+          ref={(ref) => { this.wrappedInstance = ref; }}
           {...props}
         />
       );
