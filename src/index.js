@@ -261,11 +261,11 @@ export default function createScrollingComponent(WrappedComponent) {
   if (useNewContextApi) {
     // const DragDropMonitorWrapper = createDragDropMonitorWrapper(ScrollingComponent);
     const DragDropMonitorWrapper = React.forwardRef((props, ref) => {
-      console.log('test', props);
+      console.log('test2', props);
       return (
         <DragDropContextConsumer>
           {({ dragDropManager }) =>
-            <WrappedComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
+            <ScrollingComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
           }
         </DragDropContextConsumer>
       );
