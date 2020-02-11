@@ -250,6 +250,7 @@ export default function createScrollingComponent(WrappedComponent) {
       const {
         // not passing down these props
         forwardedRef,
+        dragDropManager,
         strengthMultiplier,
         verticalStrength,
         horizontalStrength,
@@ -260,7 +261,7 @@ export default function createScrollingComponent(WrappedComponent) {
 
       return (
         <WrappedComponent
-          ref={this.forwardedRef}
+          ref={forwardedRef}
           {...props}
         />
       );
