@@ -105,9 +105,6 @@ export default function createScrollingComponent(WrappedComponent) {
     componentDidMount() {
       const { getScrollContainer, forwardRef } = this.props;
       // console.log('forwardRef', forwardRef);
-      if (!forwardRef || !forwardRef.current) {
-        return;
-      }
       const wrappedNode = findDOMNode(forwardRef);
       this.container = getScrollContainer ? getScrollContainer(wrappedNode) : wrappedNode;
       this.container.addEventListener('dragover', this.handleEvent);
