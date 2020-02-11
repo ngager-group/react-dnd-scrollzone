@@ -1,6 +1,6 @@
 {
   "name": "react-dnd-scrollzone",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A cross browser solution to scrolling during drag and drop.",
   "main": "lib/index.js",
   "typings": "typings/index.d.ts",
@@ -10,7 +10,8 @@
     "lint": "eslint src",
     "pretest": "npm run lint",
     "test": "mocha test",
-    "prepublish": "in-publish && npm run test && npm run build || not-in-publish",
+    "prepare": "npm run build",
+    "prepublish": "npm run build",
     "publish:major": "npm version major && npm publish",
     "publish:minor": "npm version minor && npm publish",
     "publish:patch": "npm version patch && npm publish",
@@ -18,10 +19,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/azuqua/react-dnd-scrollzone"
+    "url": "https://github.com/ngager-group/react-dnd-scrollzone"
   },
   "bugs": {
-    "url": "http://github.com/azuqua/react-dnd-scrollzone/issues"
+    "url": "https://github.com/ngager-group/react-dnd-scrollzone/issues"
   },
   "keywords": [
     "react",
