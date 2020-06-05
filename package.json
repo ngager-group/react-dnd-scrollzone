@@ -71,6 +71,6 @@
   "peerDependencies": {
     "react": "15.1 - 16",
     "react-dom": "15.1 - 16",
-    "react-dnd": "2 - 10"
+    "react-dnd": "2 - 11"
   }
 }
