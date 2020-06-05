@@ -255,11 +255,11 @@ export default function createScrollingComponent(WrappedComponent) {
 
   if (useNewContextApi) {
     const DragDropMonitorWrapper = React.forwardRef((props, ref) => (
-      <DndContext>
+      <DndContext.Consumer>
         {({ dragDropManager }) =>
           <ScrollingComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
         }
-      </DndContext>
+      </DndContext.Consumer>
     ));
     return hoist(DragDropMonitorWrapper, WrappedComponent);
   }
