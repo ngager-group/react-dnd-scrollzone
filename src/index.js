@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { DragDropContextConsumer } from 'react-dnd';
+import { DndContext } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import throttle from 'lodash.throttle';
@@ -10,19 +10,7 @@ import { noop, intBetween, getCoords } from './util';
 
 const DEFAULT_BUFFER = 150;
 
-const useNewContextApi = createContext !== undefined && DragDropContextConsumer !== undefined;
-
-function createDragDropMonitorWrapper(WrappedComponent) {
-  return function DragDropMonitorWrapper(props) {
-    return (
-      <DragDropContextConsumer>
-        {({ dragDropManager }) =>
-          <WrappedComponent {...props} dragDropManager={dragDropManager} />
-        }
-      </DragDropContextConsumer>
-    );
-  };
-}
+const useNewContextApi = createContext !== undefined && DndContext !== undefined;
 
 export function createHorizontalStrength(_buffer) {
   return function defaultHorizontalStrength({ x, w, y, h }, point) {
@@ -266,13 +254,12 @@ export default function createScrollingComponent(WrappedComponent) {
   }
 
   if (useNewContextApi) {
-    // const DragDropMonitorWrapper = createDragDropMonitorWrapper(ScrollingComponent);
     const DragDropMonitorWrapper = React.forwardRef((props, ref) => (
-      <DragDropContextConsumer>
+      <DndContext>
         {({ dragDropManager }) =>
           <ScrollingComponent forwardedRef={ref} {...props} dragDropManager={dragDropManager} />
         }
-      </DragDropContextConsumer>
+      </DndContext>
     ));
     return hoist(DragDropMonitorWrapper, WrappedComponent);
   }
