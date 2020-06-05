@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { DragDropContextConsumer } from 'react-dnd';
+import { Consumer as DragDropContextConsumer } from 'react-dnd/lib/DragDropContext';
 import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import throttle from 'lodash.throttle';
